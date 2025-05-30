@@ -22,7 +22,35 @@ The Class Attendance Tracker is a console-based application designed to help tea
 - **Accessibility**: Runs on any computer with Python installed, no internet required
 - **Reporting**: Export capabilities for attendance analysis and record-keeping
 
-This application is ideal for educational environments where a straightforward, reliable attendance tracking solution is needed without the complexity of web-based systems.
+## Project Structure
+
+This project follows a proper Python package structure:
+
+```
+attendance_tracker/
+├── __init__.py         # Main package initialization
+├── models/             # SQLAlchemy ORM models
+│   ├── __init__.py
+│   ├── base.py         # Database connection setup
+│   ├── student.py      # Student model
+│   └── attendance.py   # Attendance model
+├── cli/                # Command-line interface
+│   ├── __init__.py
+│   └── commands.py     # CLI commands implementation
+└── utils/              # Utility functions
+    ├── __init__.py
+    └── helpers.py      # Helper functions
+```
+
+## Setup and Installation
+
+1. Make sure you have Python 3.8+ installed
+2. Install pipenv: `pip install pipenv`
+3. Clone this repository
+4. Run the setup script: `./setup.sh`
+5. Activate the virtual environment: `pipenv shell`
+6. Run the application: `python run.py`
+7. To migrate existing data: `python migrate.py`
 
 ## Options and Usage
 
@@ -30,7 +58,7 @@ This application is ideal for educational environments where a straightforward, 
 **Usage:** Enter a student's name when prompted.
 - Names must contain only letters and spaces
 - Each student must have a unique name
-- Example: `emberly`
+- Example: `John Smith`
 
 ### 2. Mark Attendance
 **Usage:** Follow the prompts to mark a student's attendance.
@@ -38,13 +66,13 @@ This application is ideal for educational environments where a straightforward, 
 2. Enter a date in YYYY-MM-DD format (or leave blank for today)
 3. Enter status as "present" or "absent"
 - Example date: `2023-05-30`
-
+- Future dates are not allowed
 
 ### 3. View Attendance Records
 **Usage:** Simply select this option to view all attendance records.
 - Records are displayed by student
 - For each student, all attendance dates and statuses are shown
-
+- A summary of total records is displayed at the end
 
 ### 4. List Students
 **Usage:** Select this option to see all students in the roster.
@@ -64,14 +92,15 @@ This application is ideal for educational environments where a straightforward, 
 1. Enter a date in YYYY-MM-DD format (or leave blank for today)
 - The system will mark all students as present for that date
 - Students who already have attendance recorded for that date will be skipped
-
+- A summary shows how many students were marked and how many were skipped
 
 ### 7. Export to CSV
 **Usage:** Select this option to export attendance data to a CSV file.
 - Creates a file named "attendance_export.csv" in the application directory
 - The file contains columns for Student, Date, and Status
 - Can be opened in Excel, Google Sheets, or any spreadsheet application
-
+- Example: `Student,Date,Status`
+          `ann,2025-05-27,present`
 
 ### 8. View Database Tables
 **Usage:** Select this option to see the raw database contents.
@@ -83,11 +112,9 @@ This application is ideal for educational environments where a straightforward, 
 ### 9. Exit
 **Usage:** Select this option to close the application.
 
-## Running the Application
-```
-python3 tracker.py
-```
+## Technical Details
 
-## Database
-The application stores data in a SQLite database file named "attendance.db" in the same directory as the application. 
-to view it run this command "sqlitebrowser attendance.db" since the attendance db cannot be viewed in the  text editor 
+- **SQLAlchemy ORM**: Used for database operations with proper models and relationships
+- **Virtual Environment**: Managed with Pipenv for dependency isolation
+- **Package Structure**: Follows Python best practices with proper module organization
+- **Data Types**: Uses lists, dictionaries, and tuples for data manipulation
